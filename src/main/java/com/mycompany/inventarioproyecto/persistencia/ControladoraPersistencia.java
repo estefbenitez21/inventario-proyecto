@@ -2,6 +2,7 @@ package com.mycompany.inventarioproyecto.persistencia;
 
 import com.mycompany.inventarioproyecto.logica.ElectrodomesticoGrande;
 import com.mycompany.inventarioproyecto.logica.ElectrodomesticoPequeno;
+import com.mycompany.inventarioproyecto.logica.MovimientoInventario;
 import com.mycompany.inventarioproyecto.logica.Producto;
 import java.util.List;
 
@@ -14,10 +15,15 @@ public class ControladoraPersistencia {
     
     ElectrodomesticoGrandeJpaController electroGrandeJpa =
             new ElectrodomesticoGrandeJpaController();
+    
+    MovimientoInventarioJpaController movimientoJpa =
+            new MovimientoInventarioJpaController();
+    
+    
 //------------------------------------------------------------
 
     
- //-----------------CRUD ELECTRODOMÉSTICOS PEQUEÑOS TEST---------------------------
+ //------CRUD ELECTRODOMÉSTICOS PEQUEÑOS TEST--------
     // CREATE
     public void crearElectrodomesticoPequeno(ElectrodomesticoPequeno electro) {
     //Captura cualquier error de persistencia
@@ -26,7 +32,7 @@ public class ControladoraPersistencia {
             electroPequeJpa.create(electro);
 
         } catch (Exception e) {
-            System.out.println("Error al crear el electrodoméstico pequeño: "
+            System.out.println("Error al crear el electrodomestico pequeño: "
                     + e.getMessage());
         }
     }
@@ -34,7 +40,7 @@ public class ControladoraPersistencia {
     //READ
     public ElectrodomesticoPequeno buscarElectrodomesticoPequeno(String codigo) {
 
-    return electroPequeJpa.findElectrodomesticoPequeno(codigo);
+        return electroPequeJpa.findElectrodomesticoPequeno(codigo);
     }
     
     public List<ElectrodomesticoPequeno> listarElectrodomesticosPequenos() {
@@ -68,8 +74,9 @@ public class ControladoraPersistencia {
             System.out.println("Error al eliminar producto");
         }
     }
- //-*****************METODOS PARA CRUD EN CONSOLA***********************
+ //-*****METODOS PARA CRUD EN CONSOLA COMO PRODUCTO *******
     
+    //READ
     public Producto buscarProducto(String codigo){
 
     Producto producto =
@@ -77,13 +84,12 @@ public class ControladoraPersistencia {
 
     if(producto == null){
 
-        producto =
-            electroGrandeJpa.findElectrodomesticoGrande(codigo);
+        producto = electroGrandeJpa.findElectrodomesticoGrande(codigo);
     }
 
     return producto;
 }
-    ///ELIMINAR GENERICO
+    ///DELETE
     public void eliminarProducto(String codigo){
 
         try{
@@ -103,6 +109,13 @@ public class ControladoraPersistencia {
 
             System.out.println("Error al Eliminar producto");
         }
+    }
+    
+    ///PARA BUSCAR POR MARCA
+    ///
+    public List<ElectrodomesticoPequeno> buscarPequenosPorMarca(String marca){
+
+        return electroPequeJpa.buscarPorMarca(marca);
     }
     
     
@@ -160,6 +173,31 @@ public class ControladoraPersistencia {
         }
     }
     
+    //PARA  BUSCAR POR MARCA
+    
+    public List<ElectrodomesticoGrande> buscarGrandesPorMarca(String marca){
+
+        return electroGrandeJpa.buscarPorMarca(marca);
+    }
+    //MOVIMIENTOS INVENTARIO
+    
+    
+    public void registrarMovimiento(
+        MovimientoInventario movimiento){
+
+        try{
+            movimientoJpa.create(movimiento);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+  
+    }
+        
+        //LISTAR MOVIMIENTOS
+    public List<MovimientoInventario> listarMovimientos(){
+
+        return movimientoJpa.findMovimientoInventarioEntities();
+    }
 } 
 
  

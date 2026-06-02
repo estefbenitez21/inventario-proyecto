@@ -25,6 +25,7 @@ public abstract class Producto implements Serializable {
 
    
     public Producto(String codigo, String nombre, double precioBase, int stock, String marca, String modelo) {
+        
         this.codigo = codigo;
         this.nombre = nombre;
         this.precioBase = precioBase;
@@ -84,21 +85,49 @@ public abstract class Producto implements Serializable {
         
     public abstract double calcularPrecioFinal();
     
-    public boolean hayDisponibilidad(int cantidad) { return this.stock >= cantidad; }
+    public boolean hayDisponibilidad(int cantidad) { 
+        
+        return this.stock >= cantidad; 
+    }
     
     
     public void mostrarInfo() {
-    System.out.printf(
-        "[%s] %s - Marca: %s | Modelo: %s | Precio: $%.2f | Stock: %d%n",
-        codigo,
-        nombre,
-        marca,
-        modelo,
-        precioBase,
-        stock
-    );
-}
+        System.out.printf(
+            "[%s] %s - Marca: %s || Modelo: %s || Precio: $%.2f || Stock: %d%n",
+            codigo,
+            nombre,
+            marca,
+            modelo,
+            precioBase,
+            stock
+        );
+    }
     
+    //Control de Stock
+    public boolean stockBajo() {
+        return stock <= 10;
+    }
+    
+    public void disminuirStock(int cantidad) {
+        this.stock -= cantidad;
+        
+    }
+    public void aumentarStock(int cantidad) {
+        this.stock += cantidad;
+    }
+    
+    public void mostrarStockMarca() {
+
+        System.out.printf(
+            "[%s] %s (%s) - Precio Base: $%.2f | Stock: %d unidades\n",
+            codigo, nombre, marca, precioBase, stock
+        );
+
+        if(stockBajo()) {
+            System.out.println(" STOCK BAJO!!");
+        }
+    
+    }
 }
 
 

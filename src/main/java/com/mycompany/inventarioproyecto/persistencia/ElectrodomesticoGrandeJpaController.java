@@ -144,4 +144,27 @@ public class ElectrodomesticoGrandeJpaController implements Serializable {
         }
     }
     
+    ///-------------------MIS FUNCIONES--------------
+    ///----------------------------------------------
+    ///
+    ///
+    ///BUSCAR POR MARCA
+    //
+    public List<ElectrodomesticoGrande> buscarPorMarca(String marca){
+
+        EntityManager em = getEntityManager();
+
+        try{
+            
+            return em.createQuery(
+                "SELECT e FROM ElectrodomesticoGrande e WHERE LOWER(e.marca) = LOWER(:marca)",
+                ElectrodomesticoGrande.class)
+                .setParameter("marca", marca)
+                .getResultList();
+
+        }finally{
+
+            em.close();
+        }
+    }
 }

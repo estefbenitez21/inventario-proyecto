@@ -3,6 +3,7 @@
 package com.mycompany.inventarioproyecto.logica;
 
 import com.mycompany.inventarioproyecto.persistencia.ControladoraPersistencia;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,16 +47,23 @@ public class Controladora {
         controlPersis.eliminarElectrodomesticoPequeno(codigo);
     }
    //*********************************************
-    
+    //BUSCAR COMO PRODUCTO
     public Producto buscarProducto(String codigo){
 
         return controlPersis.buscarProducto(codigo);
     }
     
-    ///ELIMINAR
+    ///ELIMINAR COMO PRODUCTO
     public void eliminarProducto(String codigo){
 
         controlPersis.eliminarProducto(codigo);
+    }
+    //*********************************************
+    
+    //PARA BUSCAR POR MARCA
+    public List<ElectrodomesticoPequeno> buscarPequenosPorMarca(String marca){
+
+        return controlPersis.buscarPequenosPorMarca(marca);
     }
     
  //-------------------------GRANDE---------------------------
@@ -86,5 +94,54 @@ public class Controladora {
      public void eliminarElectrodomesticoGrande(String codigo){
 
         controlPersis.eliminarElectrodomesticoGrande(codigo);
+    }
+     
+    //PARA BUSCAR COMO MARCA
+     public List<ElectrodomesticoGrande> buscarGrandesPorMarca(String marca){
+
+        return controlPersis.buscarGrandesPorMarca(marca);
+    }
+     
+    //MOSTRAR VALOR TOTAL DEL INVENTARIO
+    //Valor Producto = Precio × Stock
+    public double calcularValorInventario() {
+
+        double total = 0;
+
+        for(ElectrodomesticoPequeno e :
+                listarElectrodomesticosPequenos()) {
+
+            total += e.getPrecioBase() * e.getStock();
+        }
+
+        for(ElectrodomesticoGrande e :
+                listarElectrodomesticosGrandes()) {
+
+            total += e.getPrecioBase() * e.getStock();
+        }
+
+        return total;
+    }
+    
+    //LISTA DE PRODUCTOS
+        public List<Producto> obtenerTodosLosProductos(){
+
+        List<Producto> productos = new ArrayList<>();
+
+        productos.addAll(listarElectrodomesticosPequenos());
+        productos.addAll(listarElectrodomesticosGrandes());
+
+        return productos;
+    }
+        
+        public void registrarMovimiento(
+            MovimientoInventario movimiento){
+
+        controlPersis.registrarMovimiento(movimiento);
+    }
+     //LITAR MOVIMIENTOS
+        public List<MovimientoInventario> listarMovimientos(){
+
+            return controlPersis.listarMovimientos();
     }
 }

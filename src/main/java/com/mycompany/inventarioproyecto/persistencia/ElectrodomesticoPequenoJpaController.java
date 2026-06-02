@@ -151,4 +151,27 @@ public class ElectrodomesticoPequenoJpaController implements Serializable {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
+    ///-------------------MIS FUNCIONES--------------
+    ///----------------------------------------------
+    ///
+    ///
+    ///BUSCAR POR MARCA
+    ///
+    public List<ElectrodomesticoPequeno> buscarPorMarca(String marca){
+
+        EntityManager em = getEntityManager();
+
+        try{
+
+            return em.createQuery(
+                "SELECT e FROM ElectrodomesticoPequeno e WHERE LOWER(e.marca) = LOWER(:marca)",
+                ElectrodomesticoPequeno.class)
+                .setParameter("marca", marca)
+                .getResultList();
+
+        }finally{
+
+            em.close();
+        }
+    }
 }
