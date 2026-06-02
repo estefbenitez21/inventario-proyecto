@@ -2,6 +2,7 @@ package com.mycompany.inventarioproyecto.persistencia;
 
 import com.mycompany.inventarioproyecto.logica.ElectrodomesticoGrande;
 import com.mycompany.inventarioproyecto.logica.ElectrodomesticoPequeno;
+import com.mycompany.inventarioproyecto.logica.Factura;
 import com.mycompany.inventarioproyecto.logica.MovimientoInventario;
 import com.mycompany.inventarioproyecto.logica.Producto;
 import java.util.List;
@@ -19,6 +20,8 @@ public class ControladoraPersistencia {
     MovimientoInventarioJpaController movimientoJpa =
             new MovimientoInventarioJpaController();
     
+    FacturaJpaController facturaJpa =
+            new FacturaJpaController();
     
 //------------------------------------------------------------
 
@@ -197,6 +200,22 @@ public class ControladoraPersistencia {
     public List<MovimientoInventario> listarMovimientos(){
 
         return movimientoJpa.findMovimientoInventarioEntities();
+    }
+    ///FACTURA
+    public void registrarFactura(Factura factura){
+
+        try{
+
+            facturaJpa.create(factura);
+
+        }catch(Exception e){
+
+            e.printStackTrace();
+        }
+    }
+    public List<Factura> listarFacturas(){
+
+        return facturaJpa.findFacturaEntities();
     }
 } 
 

@@ -165,7 +165,7 @@ public class Menu {
                     break;
 
                 case 4:
-                    ///Facturacion();
+                    listarFacturas();
                     break;
 
                 case 5:
@@ -571,7 +571,7 @@ public class Menu {
 
         System.out.println("\n********** REGISTRAR VENTA **********");
 
-        System.out.print("Código del producto: ");
+        System.out.print("Codigo del producto: ");
         String codigo = sc.nextLine();
 
         Producto producto = control.buscarProducto(codigo);
@@ -614,16 +614,47 @@ public class Menu {
                         cantidad);
 
         control.registrarMovimiento(movimiento);
-        
-       double total = producto.getPrecioBase() * cantidad;
-
         System.out.println("\nVenta realizada correctamente.");
 
-        System.out.println("Producto: " + producto.getNombre());
+        double total = producto.getPrecioBase() * cantidad;
 
-        System.out.println("Cantidad: " + cantidad);
+        Factura factura = new Factura(
+                LocalDate.now().toString(),
+                producto.getCodigo(),
+                producto.getNombre(),
+                cantidad,
+                producto.getPrecioBase(),
+                total);
 
-        System.out.println("Total: $" + total);
+        control.registrarFactura(factura);
+        System.out.println("\n=================================");
+        System.out.println("           FACTURA");
+        System.out.println("=================================");
+
+        System.out.println("Fecha: " + factura.getFecha());
+
+        System.out.println("\nProducto : "
+                + factura.getNombreProducto());
+
+        System.out.println("Codigo   : "
+                + factura.getCodigoProducto());
+
+        System.out.println("Cantidad : "
+                + factura.getCantidad());
+
+        System.out.printf("Precio   : $%.2f%n",
+                factura.getPrecioUnitario());
+
+        System.out.println("---------------------------------");
+
+        System.out.printf("TOTAL    : $%.2f%n",
+                factura.getTotal());
+
+        System.out.println("---------------------------------");
+
+        System.out.println("Gracias por su compra.");
+        System.out.println("=================================");        
+    
     }
     
     //HISTORIAL MOVIMIENTOS
@@ -712,6 +743,37 @@ public class Menu {
         System.out.println("Stock actual: "
                 + producto.getStock());
     }
+    
+    //LITAR FACTURAS
+    
+    private void listarFacturas(){
 
+        List<Factura> facturas = control.listarFacturas();
 
+        if(facturas.isEmpty()){
+
+        System.out.println("\nNo existen facturas registradas.");
+        return;
+    }
+
+        System.out.println("\n==============================================================");
+        System.out.println("                     LISTADO DE FACTURAS");
+        System.out.println("==============================================================");
+
+        System.out.printf("%-10s %-12s %-10s %-25s %-10s %-10s%n",
+                "Factura", "Fecha","Codigo","Producto","Cantidad","Total");
+
+        System.out.println("--------------------------------------------------------------------------");
+
+        for(Factura factura : facturas){
+
+            System.out.printf("%-10d %-12s %-10s %-25s %-10d $%-10.2f%n",
+                    factura.getNumeroFactura(),
+                    factura.getFecha(),
+                    factura.getCodigoProducto(),
+                    factura.getNombreProducto(),
+                    factura.getCantidad(),
+                    factura.getTotal());
+        }
+    }
 }

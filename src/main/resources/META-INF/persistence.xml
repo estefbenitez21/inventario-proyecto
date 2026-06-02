@@ -6,6 +6,7 @@
     <class>com.mycompany.inventarioproyecto.logica.ElectrodomesticoPequeno</class>
     <class>com.mycompany.inventarioproyecto.logica.ElectrodomesticoGrande</class>
     <class>com.mycompany.inventarioproyecto.logica.MovimientoInventario</class>
+    <class>com.mycompany.inventarioproyecto.logica.Factura</class>
     <properties>
       <!-- Conexión -->
       <!-- Generación automática de tablas -->

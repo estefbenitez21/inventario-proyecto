@@ -144,4 +144,16 @@ public class Controladora {
 
             return controlPersis.listarMovimientos();
     }
+        
+     //FACTURA
+        
+    public void registrarFactura(Factura factura){
+
+        controlPersis.registrarFactura(factura);
+    }
+    
+    public List<Factura> listarFacturas(){
+
+        return controlPersis.listarFacturas();
+    }
 }
